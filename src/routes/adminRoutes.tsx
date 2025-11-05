@@ -1,30 +1,39 @@
-import { lazyImport } from "@/utils/lazyImport";
 import type { RouteObject } from "react-router-dom";
 import { PATHS } from "./paths";
-import { lazyImportBatch } from "@/utils/lazyImportBatch";
-import { ADMIN_PAGES } from "@/types/pageNames";
+import { lazy } from "react";
 
-const AdminLayout = lazyImport({
-  module: "layouts",
-  name: "AdminLayout",
-});
-
-const adminPages = lazyImportBatch("admin", ADMIN_PAGES);
+const AdminLayout = lazy(() => import("@/layouts/AdminLayoutPage"));
+const AdminDashboard = lazy(() => import("@/pages/admin/AdminDashboardPage"));
+const UserManagement = lazy(() => import("@/pages/admin/UserManagementPage"));
+const ProductManagement = lazy(
+  () => import("@/pages/admin/ProductManagementPage")
+);
+const OrderManagement = lazy(() => import("@/pages/admin/OrderManagementPage"));
+const CategoryManagement = lazy(
+  () => import("@/pages/admin/CategoryManagementPage")
+);
+const DiscountManagement = lazy(
+  () => import("@/pages/admin/DiscountManagementPage")
+);
+const ContentManagement = lazy(
+  () => import("@/pages/admin/ContentManagementPage")
+);
+const Reports = lazy(() => import("@/pages/admin/ReportsPage"));
 
 export const adminRoutesConfig: RouteObject = {
   path: PATHS.ADMIN.ROOT,
   element: <AdminLayout />,
   children: [
-    { index: true, element: <adminPages.AdminDashboard /> },
-    { path: PATHS.ADMIN.USERS, element: <adminPages.UserManagement /> },
-    { path: PATHS.ADMIN.PRODUCTS, element: <adminPages.ProductManagement /> },
-    { path: PATHS.ADMIN.ORDERS, element: <adminPages.OrderManagement /> },
+    { index: true, element: <AdminDashboard /> },
+    { path: PATHS.ADMIN.USERS, element: <UserManagement /> },
+    { path: PATHS.ADMIN.PRODUCTS, element: <ProductManagement /> },
+    { path: PATHS.ADMIN.ORDERS, element: <OrderManagement /> },
     {
       path: PATHS.ADMIN.CATEGORIES,
-      element: <adminPages.CategoryManagement />,
+      element: <CategoryManagement />,
     },
-    { path: PATHS.ADMIN.DISCOUNTS, element: <adminPages.DiscountManagement /> },
-    { path: PATHS.ADMIN.CONTENT, element: <adminPages.ContentManagement /> },
-    { path: PATHS.ADMIN.REPORTS, element: <adminPages.Reports /> },
+    { path: PATHS.ADMIN.DISCOUNTS, element: <DiscountManagement /> },
+    { path: PATHS.ADMIN.CONTENT, element: <ContentManagement /> },
+    { path: PATHS.ADMIN.REPORTS, element: <Reports /> },
   ],
 };

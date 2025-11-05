@@ -1,21 +1,16 @@
 import type { RouteObject } from "react-router-dom";
 import { PATHS } from "./paths";
-import { lazyImport } from "@/utils/lazyImport";
-import { lazyImportBatch } from "@/utils/lazyImportBatch";
-import { AUTH_PAGES } from "@/types/pageNames";
+import { lazy } from "react";
 
-const AuthLayout = lazyImport({
-  module: "layouts",
-  name: "AuthLayout",
-});
-
-const authPages = lazyImportBatch("auth", AUTH_PAGES);
+const AuthLayout = lazy(() => import("@/layouts/AuthLayoutPage"));
+const Login = lazy(() => import("@/pages/auth/LoginPage"));
+const Register = lazy(() => import("@/pages/auth/RegisterPage"));
 
 export const authRoutesConfig: RouteObject = {
   path: PATHS.AUTH.ROOT,
   element: <AuthLayout />,
   children: [
-    { path: PATHS.AUTH.LOGIN, element: <authPages.Login /> },
-    { path: PATHS.AUTH.REGISTER, element: <authPages.Register /> },
+    { path: PATHS.AUTH.LOGIN, element: <Login /> },
+    { path: PATHS.AUTH.REGISTER, element: <Register /> },
   ],
 };
