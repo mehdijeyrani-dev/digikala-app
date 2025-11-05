@@ -1,1 +1,15 @@
 @import "tailwindcss";
+
+@theme{
+    --font-peyda: "PeydaFaNum"
+}
+
+@layer base{
+    body{
+        @apply font-peyda bg-white text-neutral-900
+    }
+}
+
+@layer components{
+    @apply bg-neutral-500 flex items-center justify-center text-white text-2xl
+}
